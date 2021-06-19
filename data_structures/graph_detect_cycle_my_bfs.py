@@ -1,53 +1,52 @@
 from data_structures.Graph import Graph
-from data_structures.MyQueue import MyQueue
+from data_structures.Stack import MyStack
 
 
-def bfs_helper(g, source, visited):
-    result = ""
+def dfs_helper(g, visited, source):
 
-    queue = MyQueue()
-    queue.enqueue(source)
+    stack = MyStack()
+    stack.push(source)
     visited[source] = True
 
-    while not queue.is_empty():
-        curr_node = queue.dequeue()
-        result += str(curr_node)
+    result = ""
 
-        temp = g.array[curr_node].head_node
+    while not stack.is_empty():
+        node = stack.pop()
+        result += str(node)
 
-        while temp:
+        temp = g.array[node].head_node
+
+        while temp is not None:
             if not visited[temp.data]:
-                queue.enqueue(temp.data)
+                stack.push(temp.data)
                 visited[temp.data] = True
             else:
-                # print("Graph has cycle")
-                return True
+                return "Graph has cycle"
             temp = temp.next_element
 
-    return False
+    return result
 
 
-def bfs(g, source):
+def dfs(g, source):
     if g.vertices == 0:
         return
-    num_of_vertices = g.vertices
 
     visited = []
-
-    for i in range(1,num_of_vertices+1):
+    # result = ""
+    for i in range(1,g.vertices+1):
         visited.append(False)
 
-    result = bfs_helper(g, source, visited)
+    result = dfs_helper(g, visited, source)
 
     return result
+
 
 if __name__ == "__main__":
     g = Graph(7)
     g.add_edge(1,2)
     g.add_edge(1,3)
     g.add_edge(3,6)
-    # g.add_edge(2,1)
     g.add_edge(2,5)
     g.add_edge(2,4)
 
-    print(bfs(g, 1))
+    print(dfs(g, 1))
