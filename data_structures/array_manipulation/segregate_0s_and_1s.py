@@ -1,0 +1,25 @@
+def segregate0and1(arr, arr_size):
+    left = 0
+    right = arr_size -1
+
+    while left<right:
+        while arr[left] == 0 and left < right:
+            left += 1
+        while arr[right] == 1 and left < right:
+            right -= 1
+        # If left is smaller than right then there is a 1 at left
+        # and a 0 at right. Exchange arr[left] and arr[right]
+        if left < right:
+            arr[left] = 0
+            arr[right] = 1
+            left += 1
+            right -= 1
+    return arr
+
+
+if __name__ == "__main__":
+    arr = [0, 1, 0, 1, 1, 1]
+    arr_size = len(arr)
+    print("Array after segregation")
+    print(segregate0and1(arr, arr_size))
+    # print(arr)
